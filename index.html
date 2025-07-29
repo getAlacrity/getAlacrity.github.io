@@ -20,19 +20,31 @@
 </div>
 
 <!-- Modal Overlay -->
-<div id="modalOverlay" class="fixed inset-0 bg-black/10 backdrop-blur-sm z-50 hidden flex items-center justify-center">
-  <div id="modalContent" class="bg-black/20 backdrop-blur-lg border border-purple-400/20 rounded-2xl p-8 max-w-md w-full shadow-xl ring-2 ring-blue-500/40 shadow-blue-500/30 transform scale-95 opacity-0 transition-all duration-300">
+<div id="modalOverlay" class="fixed inset-0 bg-gray-800/40 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+  <div id="modalContent" class="bg-gray-900/60 backdrop-blur-lg border border-gray-400/20 rounded-2xl p-8 max-w-md w-full shadow-xl ring-2 ring-gray-500/40 shadow-gray-500/30 transform scale-95 opacity-0 transition-all duration-300">
     <h2 class="text-2xl font-bold mb-4 text-center">Choose you want</h2>
     <div class="space-y-4">
-      <a href="https://getalacrity.github.io/getalacrity-100unc.github.io/" class="block bg-blue-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-center transition">100 unc/sunc version(auto update)</a>
+      <!-- 開放中的按鈕 -->
+      <a href="https://getalacrity.github.io/getalacrity-100unc.github.io/"
+         class="block bg-blue-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-center transition">
+        100 unc/sunc version (auto update)
+      </a>
 
-      <a href="" class="block bg-blue-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-center transition">Soon...</a>
+      <!-- 尚未開放的按鈕 -->
+      <button disabled
+              class="block w-full bg-gray-500/40 text-white/50 px-4 py-2 rounded-xl text-center cursor-not-allowed">
+        Soon...
+      </button>
 
-      <a href="" class="block bg-blue-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-center transition">Soon...</a>
+      <button disabled
+              class="block w-full bg-gray-500/40 text-white/50 px-4 py-2 rounded-xl text-center cursor-not-allowed">
+        Soon...
+      </button>
     </div>
     <button onclick="toggleModal()" class="mt-6 block mx-auto text-gray-400 hover:text-white transition text-sm">Close</button>
   </div>
 </div>
+
 
 
   <!-- Top Navbar -->
