@@ -1,331 +1,373 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
+<html lang="en" class="h-full bg-black text-white">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>❄Alacrity</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alacrity - Keyless Roblox Executor</title>
   <link rel="icon" href="Alacrity.png" type="image/png">
   <link rel="apple-touch-icon" href="Alacrity.png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --primary-color: rgba(128, 0, 255, 0.8);
+      --primary-glow: rgba(160, 80, 255, 0.6);
+    }
+    
+    body {
+      background-color: #000;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* 光暈效果优化 */
+    .glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(128,0,255,0.25) 0%, transparent 70%);
+      filter: blur(120px);
+      z-index: 0;
+      opacity: 0.7;
+      transition: opacity 0.5s ease;
+    }
+    .glow1 { top: -200px; left: -200px; }
+    .glow2 { bottom: -200px; right: -200px; }
+    body:hover .glow {
+      opacity: 0.9;
+    }
+
+    /* 星星背景优化 */
+    .stars, .stars::after {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow:
+        100px 200px white, 300px 400px white, 600px 700px white,
+        800px 1200px white, 1200px 900px white, 1500px 300px white,
+        1700px 800px white, 200px 1300px white, 400px 1600px white,
+        600px 2000px white, 900px 1800px white, 1400px 1500px white;
+      animation: animStar 100s linear infinite;
+    }
+    .stars::after { top: 2000px; }
+    @keyframes animStar {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-2000px); }
+    }
+
+    /* 卡片设计优化 */
+    .feature-card {
+      position: relative;
+      border: 1px solid rgba(128,0,255,0.3);
+      border-radius: 1rem;
+      background: rgba(10, 10, 10, 0.5);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .feature-card:hover {
+      border-color: rgba(160,80,255,0.6);
+      box-shadow: 0 0 25px rgba(160,80,255,0.4);
+      transform: translateY(-5px);
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Hero 区域优化 */
+    .hero-title {
+      text-shadow: 0 0 20px rgba(160,80,255,0.8), 0 0 40px rgba(160,80,255,0.6);
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    /* Hero 按钮优化 */
+    .hero-button {
+      background: linear-gradient(135deg, rgba(128,0,255,0.9) 0%, rgba(160,80,255,0.9) 100%);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.7s ease;
+    }
+    .hero-button:hover {
+      box-shadow: 0 0 25px rgba(160,80,255,0.7);
+      transform: translateY(-2px);
+    }
+    .hero-button:hover::before {
+      left: 100%;
+    }
+
+    /* 导航栏优化 */
+    .nav-glass {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 滚动条优化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(160,80,255,0.8);
+    }
+
+    /* 动画效果 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+
+    /* 响应式优化 */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+      .feature-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body class="font-sans relative">
 
-  <!-- Status -->
-  <div class="fixed top-4 left-4 flex items-center space-x-2 z-50">
-  <span class="relative flex h-3 w-3">
-    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-  </span>
-  <span class="text-sm text-white font-medium">status: Down, wait for update.</span>
-</div>
+  <!-- 光暈 + 星星 -->
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+  <div class="stars"></div>
 
-<!-- Modal Overlay -->
-<div id="modalOverlay" class="fixed inset-0 bg-gray-800/40 backdrop-blur-sm z-50 hidden flex items-center justify-center">
-  <div id="modalContent" class="bg-gray-900/60 backdrop-blur-lg border border-gray-400/20 rounded-2xl p-8 max-w-md w-full shadow-xl ring-2 ring-gray-500/40 shadow-gray-500/30 transform scale-95 opacity-0 transition-all duration-300">
-    <h2 class="text-2xl font-bold mb-4 text-center">Choose you want</h2>
-    <div class="space-y-4">
-      <!-- 開放中的按鈕 -->
-      <a href="https://getalacrity.github.io/getalacrity-100unc.github.io/"
-         class="block bg-blue-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-center transition">
-        velocity version (auto update)
-      </a>
-
-      <!-- 尚未開放的按鈕 -->
-      <button disabled
-              class="block w-full bg-gray-500/40 text-white/50 px-4 py-2 rounded-xl text-center cursor-not-allowed">
-        Soon...
+  <!-- 導覽列 -->
+  <header class="w-full py-4 flex justify-center fixed top-0 z-50">
+    <nav class="nav-glass flex items-center justify-between w-[90%] max-w-6xl px-6 py-3 rounded-2xl">
+      <div class="text-purple-500 font-bold text-xl flex items-center">
+        <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor"/>
+        </svg>
+        Alacrity
+      </div>
+      <ul class="hidden md:flex space-x-6 text-gray-300 font-medium">
+        <li><a href="#" class="px-4 py-2 rounded-lg border border-purple-700/30 text-purple-400 hover:bg-purple-600/20 transition flex items-center">
+          <i data-lucide="discord" class="w-4 h-4 mr-2"></i> Discord
+        </a></li>
+      </ul>
+      <button class="md:hidden text-purple-400">
+        <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
-
-      <button disabled
-              class="block w-full bg-gray-500/40 text-white/50 px-4 py-2 rounded-xl text-center cursor-not-allowed">
-        Soon...
-      </button>
-    </div>
-    <button onclick="toggleModal()" class="mt-6 block mx-auto text-gray-400 hover:text-white transition text-sm">Close</button>
-  </div>
-</div>
-
-
-
-  <!-- Top Navbar -->
-  <header class="w-full fixed top-0 left-0 z-40 bg-black/50 backdrop-blur-md border-b border-gray-800 shadow">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="text-xl font-bold text-white">❄Alacrity Team</h1>
-      <nav class="flex space-x-4">
-        <a href="https://discord.gg/3PwAy6Zy2D" target="_blank"
-           class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition shadow">
-          Discord
-        </a>
-        <a href="#features"
-           class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl transition">
-          Questions
-        </a>
-        <a href="#features"
-           class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl transition">
-          Features
-        </a>
-        <button onclick="toggleModal()"
-           class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl transition">
-          Other
-        </button>
-      </nav>
-    </div>
+    </nav>
   </header>
 
-  <!-- Hero Section -->
-<section class="min-h-screen flex flex-col justify-center items-center px-4 text-center pt-0">
+  <!-- Hero -->
+  <section class="text-center relative z-10 pt-40 pb-32 px-4">
+    <h1 class="hero-title text-6xl md:text-7xl font-extrabold mb-6 tracking-wide animate-fade-in">
+      Alacrity
+    </h1>
+    <h2 class="text-2xl md:text-3xl font-semibold mb-8 text-gray-300 animate-fade-in delay-100">
+      The Best Keyless Roblox Executor
+    </h2>
+    <p class="max-w-2xl mx-auto text-gray-400 mb-10 text-lg animate-fade-in delay-200">
+      Experience unparalleled performance with our advanced keyless solution for Roblox scripting.
+    </p>
+    <a href="#download" class="hero-button inline-block px-16 py-4 rounded-2xl font-semibold shadow-lg text-white animate-fade-in delay-300">
+      Download Now
+    </a>
+  </section>
 
-  <img src="Alacrity.png" alt="Alacrity Logo" class="w-20 h-20 mb-4 rounded-x1 shadow-lg">
+  <!-- Features 區 -->
+  <section class="relative z-10 py-20 px-4" id="features">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-4 animate-fade-in">Why Choose Alacrity?</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto text-center mb-16 animate-fade-in delay-100">
+        Here are some features that make Alacrity the top choice for Roblox execution.
+      </p>
 
-  <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Alacrity</h1>
-  <p class="text-lg text-gray-300 max-w-xl mb-6">
-    A powerful and reliable free script executor for Roblox. Fast injection, regular updates, and keyless.
-  </p>
-  <a href="https://filerift.com/file/p-FgUi9bwU" class="relative bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition duration-300 shadow-blue-500/40 hover:shadow-blue-500/70 hover:shadow-xl overflow-hidden">
-  <span class="absolute inset-0 rounded-xl blur-sm opacity-50 bg-blue-500 animate-pulse pointer-events-none z-0"></span>
-  <span class="relative z-10">Download Now</span>
-</a>
-</section>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="feature-card p-6 animate-fade-in delay-200">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="shield" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Safest</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            No Trojans/Virus, always providing the safest software with regular security updates.
+          </p>
+        </div>
 
-<!-- Right Panel Stack -->
-<div id="infoPanelStack" class="fixed top-24 right-4 w-72 space-y-3 z-40 opacity-0 translate-y-4 transition-all duration-500">
+        <div class="feature-card p-6 animate-fade-in delay-200">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="zap" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Stable</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            A stable experience with minimal crashes. Quick support ensures fast resolutions.
+          </p>
+        </div>
 
-  <!-- Latest Version -->
-  <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-lg">
-    <div class="w-full flex justify-between items-center px-4 py-3 text-left">
-      <span class="font-semibold text-white">🔔 Latest Version</span>
-    </div>
-    <div class="collapse-content px-4 pb-4 text-sm text-gray-300">
-      v2.0.0 - Augest 15, 2025
-    </div>
-  </div>
+        <div class="feature-card p-6 animate-fade-in delay-300">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="cpu" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Performant</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Lightning-fast execution with exceptional optimization for the best performance.
+          </p>
+        </div>
 
-  <!-- Changelogs -->
-  <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-lg">
-    <div class="w-full flex justify-between items-center px-4 py-3 text-left">
-      <span class="font-semibold text-white">⚙ Changelogs</span>
-    </div>
-    <div class="collapse-content px-4 pb-4 text-sm text-gray-300">
-      <ul class="list-disc list-inside space-y-1">
-        <li>UI remake </li>
-        <li>better monaco </li>
-        <li>Translator(Support Chinese and English) </li>
-        <li>Add more Animation </li>
-        <li>Add settings page: </li>
-        <li>1. Top Most </li>
-        <li>2. Auto Attach </li>
-      </ul>
-    </div>
-  </div>
+        <div class="feature-card p-6 animate-fade-in delay-300">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="code" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Script Support</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Run many scripts with maximum compatibility and updated script engine.
+          </p>
+        </div>
 
-</div>
+        <div class="feature-card p-6 animate-fade-in delay-400">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="cloud" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Built-in Script Hub</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Access hundreds of premium scripts directly from the executor with our built-in script hub.
+          </p>
+        </div>
 
-
-  <!-- Features Section -->
-<section id="features" class="py-16 bg-black/0 backdrop-blur-md">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="feature-card opacity-0 translate-y-6 transition duration-700 bg-white/5 rounded-2xl p-6 text-center shadow-lg">
-        <h3 class="text-xl font-semibold mb-2">Free to Use</h3>
-        <p class="text-gray-300">No subscriptions. Download and use for free, forever.</p>
+        <div class="feature-card p-6 animate-fade-in delay-400">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="p-2 rounded-lg bg-purple-500/10">
+              <i data-lucide="key" class="w-6 h-6 text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Keyless Access</h3>
+          </div>
+          <p class="text-gray-300 text-sm">
+            No more waiting for keys - instant access to all features with our advanced system.
+          </p>
+        </div>
       </div>
-      <div class="feature-card opacity-0 translate-y-6 transition duration-700 bg-white/5 rounded-2xl p-6 text-center shadow-lg">
-        <h3 class="text-xl font-semibold mb-2">Fast Injection</h3>
-        <p class="text-gray-300">Lightning-fast script injection with low crash rate.</p>
+    </div>
+  </section>
+
+  <!-- 下载区域 -->
+  <section class="relative z-10 py-20 px-4 bg-gradient-to-t from-black to-purple-900/10" id="download">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-6">Get Started with Alacrity</h2>
+      <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+        Download now and experience the future of Roblox execution. Available for Windows 10/11.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" class="hero-button px-8 py-4 rounded-xl font-semibold flex items-center justify-center">
+          <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download for Windows
+        </a>
+        <a href="#" class="px-8 py-4 rounded-xl font-semibold border border-purple-700/50 text-purple-400 hover:bg-purple-600/20 transition flex items-center justify-center">
+          <i data-lucide="book-open" class="w-5 h-5 mr-2"></i> Documentation
+        </a>
       </div>
-      <div class="feature-card opacity-0 translate-y-6 transition duration-700 bg-white/5 rounded-2xl p-6 text-center shadow-lg">
-        <h3 class="text-xl font-semibold mb-2">Regular Updates</h3>
-        <p class="text-gray-300">We keep the executor up to date with Roblox patches.</p>
+      <p class="text-sm text-gray-500 mt-6">Version 2.1.0 • 12.5 MB • Updated 3 days ago</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="relative z-10 py-12 px-4 border-t border-gray-800/50">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-purple-500 font-bold text-xl mb-4 md:mb-0">
+          Alacrity
+        </div>
+        <div class="text-gray-400 text-sm">
+          © 2023 Alacrity Executor. All rights reserved.
+        </div>
+        <div class="flex space-x-4 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+            <i data-lucide="discord" class="w-5 h-5"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+            <i data-lucide="twitter" class="w-5 h-5"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+            <i data-lucide="youtube" class="w-5 h-5"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-
-  <!-- FAQ Section -->
-<section class="py-20 px-4 max-w-4xl mx-auto">
-  <h2 class="text-3xl font-bold text-center mb-10">Frequently Asked Questions</h2>
-  <div class="space-y-6">
-    <details class="faq-card bg-white/5 rounded-xl p-4 cursor-pointer opacity-0 translate-y-6 transition duration-700">
-      <summary class="font-semibold text-lg">Is this executor a virus?</summary>
-      <p class="text-gray-300 mt-2">No, our tool is actually safe, no virus at all.</p>
-    </details>
-    <details class="faq-card bg-white/5 rounded-xl p-4 cursor-pointer opacity-0 translate-y-6 transition duration-700">
-      <summary class="font-semibold text-lg">Is this executor bypass Hyperion (Byfron)?</summary>
-      <p class="text-gray-300 mt-2">No, All pc executors are currently detected.</p>
-    </details>
-    <details class="faq-card bg-white/5 rounded-xl p-4 cursor-pointer opacity-0 translate-y-6 transition duration-700">
-      <summary class="font-semibold text-lg">How do I install it?</summary>
-      <p class="text-gray-300 mt-2">Click "Download Now", and run the updater (Bootstrapper) in the folder you want.</p>
-    </details>
-    <details class="faq-card bg-white/5 rounded-xl p-4 cursor-pointer opacity-0 translate-y-6 transition duration-700">
-      <summary class="font-semibold text-lg">Is it free forever?</summary>
-      <p class="text-gray-300 mt-2">Yes! We believe in making powerful tools accessible to everyone.</p>
-    </details>
-  </div>
-</section>
-
-
-  <!-- Footer -->
-<footer class="py-8 text-center text-gray-500 text-sm border-t border-gray-900">
-  © 2025 Alacrity. Not affiliated with Roblox Corporation.
-</footer>
-
-<!-- 星空背景 canvas -->
-<canvas id="starfield" class="absolute top-0 left-0 w-full h-full -z-50 pointer-events-none"></canvas>
-
-<!-- Script -->
-<script>
-  // Modal toggle
-  function toggleModal() {
-    const overlay = document.getElementById('modalOverlay');
-    const content = document.getElementById('modalContent');
-
-    if (overlay.classList.contains('hidden')) {
-      overlay.classList.remove('hidden');
-      setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-      }, 10);
-    } else {
-      content.classList.remove('scale-100', 'opacity-100');
-      content.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => {
-        overlay.classList.add('hidden');
-      }, 300);
-    }
-  }
-
-  // Intersection animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('opacity-0', 'translate-y-6');
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        observer.unobserve(entry.target);
-      }
+  <script>
+    lucide.createIcons();
+    
+    // 滚动动画
+    document.addEventListener('DOMContentLoaded', function() {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('section, .feature-card').forEach((section) => {
+        observer.observe(section);
+      });
     });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll('.feature-card').forEach(card => {
-    observer.observe(card);
-  });
-
-  const faqObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('opacity-0', 'translate-y-6');
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        faqObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.6 });
-
-  document.querySelectorAll('.faq-card').forEach(card => {
-    faqObserver.observe(card);
-  });
-
-  const infoPanel = document.getElementById('infoPanelStack');
-  const infoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        infoPanel.classList.remove('opacity-0', 'translate-y-4');
-        infoPanel.classList.add('opacity-100', 'translate-y-0');
-        infoObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  infoObserver.observe(infoPanel);
-
-  // 折疊右側面板
-  function toggleCollapse(button) {
-    const content = button.nextElementSibling;
-    const arrow = button.querySelector('span:last-child');
-    const isOpen = !content.classList.contains('hidden');
-
-    if (isOpen) {
-      content.classList.add('hidden');
-      arrow.textContent = '▼';
-    } else {
-      content.classList.remove('hidden');
-      arrow.textContent = '▲';
-    }
-  }
-
-  // 星空背景動畫
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-  let stars = [];
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = document.body.scrollHeight;
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  // 初始化星星
-  for (let i = 0; i < 150; i++) {
-    stars.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5,
-      vx: (Math.random() - 0.5) * 0.2,
-      vy: (Math.random() - 0.5) * 0.2,
-      opacity: Math.random()
-    });
-  }
-
-  function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let star of stars) {
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-      ctx.fill();
-
-      star.x += star.vx;
-      star.y += star.vy;
-
-      star.opacity += (Math.random() - 0.5) * 0.02;
-      star.opacity = Math.max(0.1, Math.min(star.opacity, 1));
-
-      if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
-        star.x = Math.random() * canvas.width;
-        star.y = Math.random() * canvas.height;
-      }
-    }
-    requestAnimationFrame(drawStars);
-  }
-
-  drawStars();
-
-    function goToPage() {
-    // 顯示 Loading 提示
-    document.getElementById("loading").classList.remove("hidden");
-
-    // 延遲跳轉
-    setTimeout(function () {
-      window.location.href = "velocity.html";
-    }, 1500); // 1.5 秒後跳轉
-  }
-
-
-
-</script>
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
