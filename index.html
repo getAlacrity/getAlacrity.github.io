@@ -234,11 +234,11 @@
         </p>
 
         <div class="cta-row">
-          <a class="btn btn-download" href="https://github.com/getAlacrity/downloads/raw/refs/heads/main/Alacrity.zip" id="downloadBtn" role="button" aria-label="Download Alacrity">
+          <a class="btn btn-download" href="#" id="downloadBtn" role="button" aria-label="Download Alacrity">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:0.95"><path d="M12 3v12M7 10l5 5 5-5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Download Alacrity
           </a>
-          <a class="btn btn-download" href="#" id="downloadBtn" role="button" aria-label="Download Alacrity">
+          <a class="btn btn-download" href="#" id="ExternaldownloadBtn" role="button" aria-label="Download Alacrity">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:0.95"><path d="M12 3v12M7 10l5 5 5-5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             External (soon)
           </a>
@@ -305,11 +305,15 @@
   <script>
     document.getElementById('downloadBtn').addEventListener('click', function(e){
       e.preventDefault();
-      alert('Download link placeholder — replace href="#" with your real download URL.');
+      window.open('https://github.com/getAlacrity/downloads/raw/refs/heads/main/Alacrity.zip');
+    });
+        document.getElementById('ExternaldownloadBtn').addEventListener('click', function(e){
+      e.preventDefault();
+      
     });
     document.getElementById('discordBtn').addEventListener('click', function(e){
       e.preventDefault();
-      window.open('https://discord.gg/', '_blank');
+      window.open('https://discord.com/invite/3PwAy6Zy2D');
     });
   </script>
 </body>
