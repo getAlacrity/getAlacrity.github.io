@@ -220,6 +220,63 @@
     @keyframes cardFadeSlide {
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.25s;
+}
+
+.modal.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal-box{
+  width:750px;
+  background:#0d1418;
+  border-radius:14px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,0.05);
+  text-align:center;
+}
+
+.modal-title{
+  font-size:28px;
+  margin-bottom:25px;
+}
+
+/* grid */
+.download-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+/* card */
+.download-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:12px;
+  padding:18px;
+}
+
+.download-card h3{
+  margin-bottom:12px;
+}
+
+.modal-image{
+  width:100%;
+  border-radius:8px;
+  margin-bottom:14px;
+}
   </style>
 </head>
 <body>
@@ -298,10 +355,60 @@
     </section>
   </main>
 
+  <!-- Download Popup -->
+<div id="downloadModal" class="modal">
+  <div class="modal-box">
+
+    <h2 class="modal-title">Download Alacrity</h2>
+
+    <div class="download-grid">
+
+      <!-- Block 1 -->
+      <div class="download-card">
+        <h3>Alacrity v3</h3>
+
+        <img src="Alacrity-ui.png"
+        class="modal-image">
+
+        <a class="btn btn-download"
+        href="https://github.com/getAlacrity/downloads/raw/refs/heads/main/Alacrity%20Installer.exe">
+        Download
+        </a>
+      </div>
+
+      <!-- Block 2 -->
+      <div class="download-card">
+        <h3>Alacrity Legacy</h3>
+
+        <img src="Alacrity Legacy.png"
+        class="modal-image">
+
+        <a class="btn btn-download"
+        href="https://github.com/getAlacrity/downloads/raw/refs/heads/main/Alacrity%20Legacy.zip">
+        Download
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
   <script>
     document.getElementById('downloadBtn').addEventListener('click', function(e){
       e.preventDefault();
-      window.open('https://github.com/getAlacrity/downloads/raw/refs/heads/main/Alacrity%20Installer.exe');
+      const modal = document.getElementById("downloadModal");
+
+document.getElementById('downloadBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  modal.classList.add("show");
+});
+
+modal.addEventListener("click", function(e){
+  if(e.target === modal){
+    modal.classList.remove("show");
+  }
+});
     });
         document.getElementById('ExternaldownloadBtn').addEventListener('click', function(e){
       e.preventDefault();
@@ -314,10 +421,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
